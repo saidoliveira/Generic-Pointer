@@ -35,32 +35,32 @@ const void *min(const void *first, const void *last, std::size_t size, MinCompar
 
 void reverse(void *first, void *last, std::size_t size)
 {
-	const byte *itf = static_cast< const byte *>(first);
-	const byte *itl = static_cast< const byte *>(last);
+	byte *itf = static_cast< byte *>(first);
+	byte *itl = static_cast< byte *>(last);
+	byte aux;
+	itl-= size;
 	
-	itl -= size;
-
 	while( itf != itl)
 	{
-		memcpy(*itf, *itl, size);
-		itf += size;
-		itl -= size;
+		aux = *itf;
+		*itf = *itl;
+		*itl = aux;
+		itf++;
+		itl--;
 	}
 }
 
 
-/*
-void *copy(const void *first, const void *last, const void *d_first, std::size_t size){
-	int tam = std::distance(first,last);
-	const byte *i = static_cast< const byte *>(first);
-	const byte *j = static_cast< const byte *>(d_first);
 
+const void *copy(void *first, void *last, void *d_first, std::size_t size){
+	byte *i = static_cast< byte *>(first);
+	byte *j = static_cast< byte *>(d_first);
+	
 	while( i != last)
 	{
-		*j = *i;
-		i +=size;
+		memcpy(j, i, size);
+		i+=size;
+		j+=size;
 	}
-
-	return j+tam;
-}*/
-
+	return d_first;
+}

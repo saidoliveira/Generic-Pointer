@@ -12,6 +12,6 @@ bool compare_ints(const void *a, const void *b);
 
 void reverse(void *first, void *last, std::size_t size);
 
-void *copy(const void *first, const void *last, const void *d_first, std::size_t size);
+const void *copy( void *first,  void *last, void *d_first, std::size_t size);
 
 #endif
