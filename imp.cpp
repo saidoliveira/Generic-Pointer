@@ -3,7 +3,7 @@
 #include <string.h>
 #include "fun.h"
 
-void print_int(const int *first, const int *last)
+void print_int( int *first, int *last)
 {
 	while(first != last)
 	{
@@ -32,7 +32,6 @@ const void *min(const void *first, const void *last, std::size_t size, MinCompar
 	return smallest;
 }
 
-
 void reverse(void *first, void *last, std::size_t size)
 {
 	byte *itf = static_cast< byte *>(first);
@@ -50,9 +49,7 @@ void reverse(void *first, void *last, std::size_t size)
 	}
 }
 
-
-
-const void *copy(void *first, void *last, void *d_first, std::size_t size){
+void *copy(void *first, void *last, void *d_first, std::size_t size){
 	byte *i = static_cast< byte *>(first);
 	byte *j = static_cast< byte *>(d_first);
 	
@@ -63,4 +60,41 @@ const void *copy(void *first, void *last, void *d_first, std::size_t size){
 		j+=size;
 	}
 	return d_first;
+}
+
+void *clone(void *first, void *last, std::size_t size)
+{
+	byte *i = static_cast< byte *>(first);
+	byte *j = static_cast< byte *>(last);
+	byte tam = std::distance(i,j)/size;
+	byte *vetor;
+	vetor = new byte[tam];
+	byte *p = static_cast< byte *>(vetor);
+
+	while(i != last)
+	{
+		memcpy(p, i, size);
+		i+=size;
+		p+=size;
+	}
+
+	return vetor;
+}
+
+
+void *find_if(void *first, void *last, std::size_t size, Predicate p)
+{
+	byte *i = static_cast< byte *>(first);
+	byte *j = static_cast< byte *>(last);
+
+	while(i != last)
+	{
+		if(p(i))
+		{
+			return i;
+		}
+
+		i+=size;
+	}	
+	return j;
 }
