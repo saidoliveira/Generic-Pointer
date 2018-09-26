@@ -95,6 +95,68 @@ void *find_if(void *first, void *last, std::size_t size, Predicate p)
 		}
 
 		i+=size;
-	}	
-	return j;
+	}
+
+	return j-size;
+}
+
+void *find(void *first, void *last, std::size_t size, void *value, Equal eq)
+{
+	byte *i = static_cast< byte *>(first);
+	byte *j = static_cast< byte *>(last);
+
+	while(i != last)
+	{
+		if(eq(i,value))
+		{
+			return i;
+		}
+		i+=size;
+	}
+	return j-size;
+}
+
+bool all_of(void *first, void *last, std::size_t size, Predicate p)
+{
+	byte *i = static_cast< byte *>(first);
+
+	while(i != last)
+	{
+		if(!p(i))
+		{
+			return false;
+		}
+		i+=size;
+	}
+	return true; 
+}
+
+bool any_of(void *first, void *last, std::size_t size, Predicate p)
+{
+	byte *i = static_cast< byte *>(first);
+
+	while(i != last)
+	{
+		if(p(i))
+		{
+			return true;
+		}
+		i+=size;
+	}
+	return false;
+}
+
+bool none_of(void *first, void *last, std::size_t size, Predicate p)
+{
+	byte *i = static_cast< byte *>(first);
+
+	while(i != last)
+	{
+		if(p(i))
+		{
+			return false;
+		}
+		i+=size;
+	}
+	return true;
 }

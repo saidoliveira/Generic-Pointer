@@ -8,11 +8,14 @@ using std::end;
 using std::cout;
 using std::endl;
 
-using Predicate = bool(*)(void *);
-bool menor(void *x)
+bool negativo(void *x)
 {
-	byte *xx = static_cast < byte *>(x);
-	return *xx < 0;	
+	return *static_cast< int *>(x) < 0;
+}
+
+bool igual(void *x, void *y)
+{
+	return *static_cast< int *>(x) == *static_cast< int *>(y); 
 }
 
 
@@ -52,11 +55,30 @@ int main(void)
 	cout << endl;
 
 	cout << "--- FIND_IF ---" << endl;
-	int find_ifv[] = {15, 30, 45, 15, 30, 45};
+	int find_ifv[] = {15, 30, 45, 15, -30, 20};
 	print_int(begin(find_ifv),end(find_ifv));
-	auto resultfind_if = (int*)find_if(begin(find_ifv),end(find_ifv),sizeof(int), menor);
+	auto resultfind_if = (int*)find_if(begin(find_ifv),end(find_ifv),sizeof(int), negativo);
 	cout << *resultfind_if << endl; 
 
+	cout << "--- FIND ---" << endl;
+	int findv[] = {2, 3, 5, 7, 11};
+	int *ptr;
+	int x = 7;
+	ptr = &x;
+	print_int(begin(findv),end(findv));
+	auto resultfind = (int*)find(begin(findv),end(findv), sizeof(int), ptr, igual);
+	cout << "Elemento a ser buscado no vetor: " << *ptr << endl << "Elemento encontrado: "<<*resultfind << endl;
+
+	cout << "--- ALL/ANY/NONE ---" << endl;
+	int all_ofv[] = {-6, -5, -4, -3, -2, -1};
+	auto resultall_of = all_of(begin(all_ofv),end(all_ofv), sizeof(int), negativo);
+	cout << "Todos os elementos são menos que zero? " << resultall_of << endl;
+	int any_ofv[] = {6, 5, 4, 3, 2, -1};
+	auto resultany_of = any_of(begin(any_ofv),end(any_ofv),sizeof(int), negativo);
+	cout << "Existe pele menos um elemento menor que zero? " << resultany_of << endl;
+	int none_ofv[] = {6, 5, 4, -3, 2, 1};
+	auto resultnone_of = none_of(begin(none_ofv),end(none_ofv),sizeof(int), negativo);
+	cout << "Todos os elementos são maiores que zero? " << resultnone_of << endl;
 	return 0;
 
 }
