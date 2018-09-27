@@ -18,6 +18,10 @@ bool igual(void *x, void *y)
 	return *static_cast< int *>(x) == *static_cast< int *>(y); 
 }
 
+bool compare_ints(const void *a, const void *b)
+{
+	return *static_cast< const int *>(a) < *static_cast< const int *>(b);
+}
 
 int main(void)
 {
@@ -37,12 +41,8 @@ int main(void)
 		
 	cout << "--- COPY ---" << endl;
 	print_int(begin(cop),end(cop));
-	auto resultcopy = (int*)copy(begin(A),end(A),begin(cop),sizeof(int));
-	for(i = 0; i < 7; i++)
-	{
-		cout << resultcopy[i] << " ";
-	}
-	cout << endl;
+	copy(begin(A),end(A),begin(cop),sizeof(int));
+	print_int(begin(cop),end(cop));
 	
 	cout << "--- CLONE ---" << endl;
 	int clonev[] = {20, 40, 60, 80, 100, -20};
@@ -83,13 +83,22 @@ int main(void)
 	cout << "--- EQUAL ---" << endl;
 	int v1[] = {1, 1, 2, 3, 5, 8, 13};
 	int v2[] = {1, 1, 2, 3, 5, 8, 13};
-
 	auto resultequal1 = equal1(begin(v1),end(v1),begin(v2),sizeof(int),igual);
 	cout << "Versão 1: Os vetores são iguais? " << resultequal1 << endl;
 	auto resultequal2 = equal2(begin(v1),end(v1),begin(v2),end(v2),sizeof(int),igual);
 	cout << "Versão 2: Os vetores são iguais? " << resultequal2 << endl;
 	
 	cout << "--- UNIQUE ---" << endl;
-	
+	int uniquev[] = {1,1,1,2,2,3,4,5,5,5,7,7,8,9};
+	print_int(begin(uniquev),end(uniquev));
+	auto resultunique = (int*)unique(begin(uniquev),end(uniquev),sizeof(int),igual);
+	print_int(begin(uniquev),resultunique);
+
+	cout << "--- SORT ---" << endl;
+	int sortv[] = {3,4,6,1,8,2,10,9};
+	print_int(begin(sortv),end(sortv));
+	sort(begin(sortv),end(sortv),sizeof(int),compare_ints);
+	print_int(begin(sortv),end(sortv));
+
 	return 0;
 }
