@@ -21,5 +21,7 @@ void *find(void *first, void *last, std::size_t size, void *value, Equal eq);
 bool all_of(void *first, void *last, std::size_t size, Predicate p);
 bool any_of(void *first, void *last, std::size_t size, Predicate p);
 bool none_of(void *first, void *last, std::size_t size, Predicate p);
+bool equal1(void *first1, void *last1, void *first2, std::size_t size, Equal eq);
+bool equal2(void *first1, void *last1, void *first2, void *last2, std::size_t size, Equal eq);
 
 #endif

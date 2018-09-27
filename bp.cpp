@@ -79,6 +79,17 @@ int main(void)
 	int none_ofv[] = {6, 5, 4, -3, 2, 1};
 	auto resultnone_of = none_of(begin(none_ofv),end(none_ofv),sizeof(int), negativo);
 	cout << "Todos os elementos são maiores que zero? " << resultnone_of << endl;
-	return 0;
 
+	cout << "--- EQUAL ---" << endl;
+	int v1[] = {1, 1, 2, 3, 5, 8, 13};
+	int v2[] = {1, 1, 2, 3, 5, 8, 13};
+
+	auto resultequal1 = equal1(begin(v1),end(v1),begin(v2),sizeof(int),igual);
+	cout << "Versão 1: Os vetores são iguais? " << resultequal1 << endl;
+	auto resultequal2 = equal2(begin(v1),end(v1),begin(v2),end(v2),sizeof(int),igual);
+	cout << "Versão 2: Os vetores são iguais? " << resultequal2 << endl;
+	
+	cout << "--- UNIQUE ---" << endl;
+	
+	return 0;
 }

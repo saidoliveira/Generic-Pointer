@@ -160,3 +160,50 @@ bool none_of(void *first, void *last, std::size_t size, Predicate p)
 	}
 	return true;
 }
+
+bool equal1(void *first1, void *last1, void *first2, std::size_t size, Equal eq)
+{
+	byte *i = static_cast< byte *>(first1);
+	byte *j = static_cast< byte *>(first2);
+
+	while(i != last1)
+	{
+		if(!eq(i,j))
+			return false;
+		i+=size;
+		j+=size;
+	}
+	return true;
+}
+
+bool equal2(void *first1, void *last1, void *first2, void *last2, std::size_t size, Equal eq)
+{
+	byte *i = static_cast< byte *>(first1);
+	byte *j = static_cast< byte *>(first2);
+
+	while(i != last1 || j != last2)
+	{
+		if(!eq(i,j))
+			return false;
+		i+=size;
+		j+=size;
+	}
+	return true;
+}
+
+void *unique(void *first, void *last, std::size_t size, Equal eq)
+{
+	byte *i = static_cast< byte *>(first);
+	byte *j = static_cast< byte *>(first);
+	
+	for(i = 0; i < tam; i++)
+	{
+		for(j = static_cast< byte *>(first); j < p; j++)
+		{
+			if(eq(i,j)){
+				memmove(i,i+size,size);
+				last-=size;
+			}
+		}
+	}
+}
